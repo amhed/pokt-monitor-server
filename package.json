@@ -1,0 +1,50 @@
+{
+  "name": "pocket-monitor",
+  "version": "1.0.0",
+  "description": "API for nodestack apps",
+  "scripts": {
+    "build": "node ./util/build.js",
+    "start-dev": "cross-env ENV_FILE=development nodemon --config \"./util/nodemon.json\"",
+    "start": "node -r ./env -r module-alias/register ./dist/index.js",
+    "typeorm": "yarn build && cross-env ENV_FILE=development ts-node -r ./env -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "typeorm-staging": "yarn build && cross-env ENV_FILE=staging ts-node -r ./env -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "typeorm-prod": "yarn build && cross-env ENV_FILE=production ts-node -r ./env -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
+  },
+  "author": "Tiny Developers, LLC",
+  "_moduleAliases": {
+    "@entities": "dist/entities",
+    "@middleware": "dist/middleware",
+    "@settings": "dist/settings",
+    "@helpers": "dist/helpers",
+    "@repositories": "dist/repositories"
+  },
+  "dependencies": {
+    "@sentry/node": "^5.19.2",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/express-handlebars": "^3.1.0",
+    "@types/http-status-codes": "^1.2.0",
+    "colors": "^1.4.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "fs-extra": "^9.0.1",
+    "http-status-codes": "^1.4.0",
+    "lodash": "^4.17.15",
+    "logdna-winston": "^2.3.2",
+    "module-alias": "^2.2.2",
+    "pg": "^8.3.0",
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "^9.0.0",
+    "tsconfig-paths": "^3.9.0",
+    "tslib": "^2.0.0",
+    "typeorm": "^0.2.25",
+    "typescript": "^3.9.7",
+    "uuidv4": "^6.1.1",
+    "winston": "^3.3.3"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "ES5",
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "module": "commonjs",
+    "outDir": "dist",
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": true,
+    "rootDir": "src",
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@entities": [
+        "src/entities"
+      ],
+      "@middleware/*": [
+        "src/middleware/*"
+      ],
+      "@settings": [
+        "src/settings"
+      ],
+      "@server": [
+        "src/Server"
+      ],
+      "@helpers/*": [
+        "src/helpers/*"
+      ]
+    },
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+    ],
+  },
+  "include": [
+    "src/global.d.ts",
+    "src/**/*.ts",
+    "spec/**/*.ts"
+  ],
+  "exclude": [
+    "src/public/"
+  ]
+}
