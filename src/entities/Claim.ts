@@ -1,3 +1,9 @@
+export interface PagedClaimResult {
+  page: number,
+  total_pages: number,
+  result: Claim[]
+}
+
 export interface Claim {
   evidence_type: number
   expiration_height: number
@@ -14,5 +20,5 @@ export interface Claim {
       upper: number
     }
   },
-  total_proofs: string
+  total_proofs: number
 }

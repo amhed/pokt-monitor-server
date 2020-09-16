@@ -5,6 +5,9 @@
   "scripts": {
     "build": "node ./util/build.js",
     "start-dev": "cross-env ENV_FILE=development nodemon --config \"./util/nodemon.json\"",
+    "start-prod": "cross-env ENV_FILE=production nodemon --config \"./util/nodemon.json\"",
+    "mon": "cross-env ENV_FILE=development ts-node -r ../env -r tsconfig-paths/register ./src/monitor.ts",
+    "mon-prod": "cross-env ENV_FILE=production ts-node -r ../env -r tsconfig-paths/register ./src/monitor.ts",
     "start": "node -r ./env -r module-alias/register ./dist/index.js",
     "typeorm": "yarn build && cross-env ENV_FILE=development ts-node -r ./env -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm-staging": "yarn build && cross-env ENV_FILE=staging ts-node -r ./env -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
@@ -25,6 +28,8 @@
     "@types/express": "^4.17.6",
     "@types/express-handlebars": "^3.1.0",
     "@types/http-status-codes": "^1.2.0",
+    "@types/lodash": "^4.14.161",
+    "axios": "^0.20.0",
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",

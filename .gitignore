@@ -108,8 +108,8 @@ dist
 
 # Production config files
 ormconfig.prod.js
-env/production.env
-env/staging.env
+env/*.env
+src/account_list.ts
 
 # Google API
 # tuciudad-9cafd92089dc.json

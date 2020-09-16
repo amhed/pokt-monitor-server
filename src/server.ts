@@ -4,11 +4,11 @@ import * as Sentry from '@sentry/node'
 import path from 'path'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+
 import { settings } from './settings'
 import { errorHandler } from './middleware/errorHandler'
 import { configureViews } from './middleware/configureViews'
-import { YoutubeVideo } from './entities/YoutubeVideo'
-import { getRepository } from './helpers/DbContext'
+import { statsController } from './controllers/statsController'
 
 // Init express
 const app = express()
@@ -31,14 +31,10 @@ app.use(cookieParser())
 configureViews(app)
 
 // Routes
-app.get('/videos', async (req, res) => {
-  const repo = await getRepository(YoutubeVideo)
-  const allVideos = await repo.find()
+app.use('/stats', statsController);
 
-  return res.send(allVideos)
-})
-
-// The Sentry error handler must be before any other error middleware and after all controllers
+// The Sentry error handler must be before any other error 
+// middleware and after all controllers
 app.use(Sentry.Handlers.errorHandler())
 app.use(errorHandler)
 

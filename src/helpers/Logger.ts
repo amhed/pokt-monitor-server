@@ -12,7 +12,4 @@ const consoleTransport = new transports.Console({
 })
 
 Logger.add(consoleTransport)
-
-if (['production', 'staging'].includes(settings.environment)) {
-  Logger.add(new logDnaWinston(settings.logdna))
-}
+Logger.add(new logDnaWinston(settings.logdna))
