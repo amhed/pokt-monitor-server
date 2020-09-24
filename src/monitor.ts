@@ -8,7 +8,12 @@ const execute = async () => {
   const stats = await getStatsForAllAccounts()
   
   const currentHeight = stats[0].height
-  const heightOnDb = await repo.findOne({height: currentHeight})
+  if (currentHeight === 0) {
+    console.log('For some reason height is zero. Ignoring')
+    return
+  }
+
+  const heightOnDb = await repo.findOne({height: currentHeight})  
   if (heightOnDb != null) {
     console.log('Height already exists. Skipping')
     return
