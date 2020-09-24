@@ -6,7 +6,7 @@ const config = {
   password: process.env.NODESTACK_DB_PASSWORD,
   database: process.env.NODESTACK_DB_DATABASE,
   synchronize: false,
-  logging: true,
+  logging: false,
   extra: { 
     ssl: process.env.NODE_ENV !== 'development'
   },
