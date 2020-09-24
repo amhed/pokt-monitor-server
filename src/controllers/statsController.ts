@@ -16,7 +16,8 @@ statsController.get('/stored', async (req, res, next) => {
 })
 
 statsController.get('/stored/:address', async (req, res, next) => {
-  const stats = await getStatsForAllAccounts()
+  const repo = await getRepository(NodeStat)
+  const stats = await NodestatQueries.getStatsByAddress(repo, req.params['address'])
   res.send(stats)
 })
 
