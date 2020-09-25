@@ -15,11 +15,13 @@ export class NodestatQueries {
   }
 
 
-  //TODO: Amhed: Add filtering here!
+  //TODO: Amhed: Add filtering + choose time horizon!
   static async getLatestSince(repo: Repository<NodeStat>): Promise<NodeStat[]> {
-    const latest = await repo
-      .createQueryBuilder('nodestat')
-      .getMany()
+    const latest = await repo.manager.query(`
+      SELECT max(balance) as Balance, max("claimCount") as "claimCount", max("measuredAt") FROM "NodeStat"
+      GROUP BY date_trunc('hour', "measuredAt")
+      Order by max("measuredAt")
+    `)
 
     return latest || []
   }
