@@ -18,8 +18,8 @@ export class NodestatQueries {
   //TODO: Amhed: Add filtering + choose time horizon!
   static async getLatestSince(repo: Repository<NodeStat>): Promise<NodeStat[]> {
     const latest = await repo.manager.query(`
-      SELECT max(name) as Name, max(balance) as Balance, max("claimCount") as "claimCount", max("measuredAt") as measuredAt FROM "NodeStat"
-      GROUP BY date_trunc('hour', "measuredAt")
+      SELECT name as Name, max(balance) as Balance, max("claimCount") as "claimCount", max("measuredAt") as measuredAt FROM "NodeStat"
+      GROUP BY name, date_trunc('hour', "measuredAt")
       Order by max("measuredAt")
     `)
 
