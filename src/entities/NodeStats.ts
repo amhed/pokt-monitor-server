@@ -7,6 +7,7 @@ export class NodeStat {
     @PrimaryColumn({ unique: true })
     id?: string;
 
+    @Column({ type: 'varchar', name: 'name', nullable: true })
     name: string;
 
     url: string;
