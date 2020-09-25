@@ -15,7 +15,13 @@ statsController.get('/stored', async (req, res, next) => {
   res.send(stats)
 })
 
-statsController.get('/stored/since/', async (req, res, next) => {
+statsController.get('/stored/hourly', async (req, res, next) => {
+  const repo = await getRepository(NodeStat)
+  const stats = await NodestatQueries.getLatestSince(repo, 'hour')
+  res.send(stats)
+})
+
+statsController.get('/stored/raw', async (req, res, next) => {
   const repo = await getRepository(NodeStat)
   const stats = await NodestatQueries.getLatestSince(repo)
   res.send(stats)

@@ -1,6 +1,8 @@
 import { NodeStat } from './../entities/NodeStats';
 import { Repository } from 'typeorm';
 
+type DateGroupType = 'day' | 'hour' | 'minute';
+
 /**
  * Wrapper class used to interact with the Stats table
  */
@@ -14,16 +16,19 @@ export class NodestatQueries {
       .getMany();
   }
 
+  static async getLatestSince(repo: Repository<NodeStat>, groupBy?: DateGroupType): Promise<NodeStat[]> {
+    if (!groupBy) {
+      return await repo.manager.query(`
+        SELECT name as Name, balance as Balance, "claimCount" as "claimCount", "measuredAt" as measuredAt FROM "NodeStat"
+        Order by "measuredAt"
+      `)
+    }
 
-  //TODO: Amhed: Add filtering + choose time horizon!
-  static async getLatestSince(repo: Repository<NodeStat>): Promise<NodeStat[]> {
-    const latest = await repo.manager.query(`
+    return await repo.manager.query(`
       SELECT name as Name, max(balance) as Balance, max("claimCount") as "claimCount", max("measuredAt") as measuredAt FROM "NodeStat"
-      GROUP BY name, date_trunc('hour', "measuredAt")
+      GROUP BY name, date_trunc('${groupBy}', "measuredAt")
       Order by max("measuredAt")
     `)
-
-    return latest || []
   }
 
   static async getLatestStats(repo: Repository<NodeStat>): Promise<NodeStat[]> {
