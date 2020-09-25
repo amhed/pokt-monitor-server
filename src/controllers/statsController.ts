@@ -15,6 +15,12 @@ statsController.get('/stored', async (req, res, next) => {
   res.send(stats)
 })
 
+statsController.get('/stored/since/', async (req, res, next) => {
+  const repo = await getRepository(NodeStat)
+  const stats = await NodestatQueries.getLatestSince(repo)
+  res.send(stats)
+})
+
 statsController.get('/stored/:address', async (req, res, next) => {
   const repo = await getRepository(NodeStat)
   const stats = await NodestatQueries.getStatsByAddress(repo, req.params['address'])

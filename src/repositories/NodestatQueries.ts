@@ -14,6 +14,16 @@ export class NodestatQueries {
       .getMany();
   }
 
+
+  //TODO: Amhed: Add filtering here!
+  static async getLatestSince(repo: Repository<NodeStat>): Promise<NodeStat[]> {
+    const latest = await repo
+      .createQueryBuilder('nodestat')
+      .getMany()
+
+    return latest || []
+  }
+
   static async getLatestStats(repo: Repository<NodeStat>): Promise<NodeStat[]> {
     const latestTimestamp = (await repo
       .createQueryBuilder('nodestat')
