@@ -21,22 +21,16 @@ Sentry.init({
 app.use(Sentry.Handlers.requestHandler());
 
 // Middleware
-app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser())
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
 // Views
 configureViews(app)
 
 // Routes
+app.use(cors())
 app.use('/stats', statsController);
 
 // The Sentry error handler must be before any other error 
