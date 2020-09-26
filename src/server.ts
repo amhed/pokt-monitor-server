@@ -21,7 +21,7 @@ Sentry.init({
 app.use(Sentry.Handlers.requestHandler());
 
 // Middleware
-app.use(cors({ origin: true }))
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))

@@ -20,7 +20,6 @@ export class NodestatQueries {
 
   static async getLatestSince(repo: Repository<NodeStat>, groupBy?: DateGroupType): Promise<NodeStat[]> {
     const oneWeekAgo = moment().add(-7, 'days').format('yy-MM-DD')
-    console.log(oneWeekAgo)
 
     if (!groupBy) {
       return await repo.manager.query(`
