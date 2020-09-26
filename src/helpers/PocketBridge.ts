@@ -4,9 +4,11 @@ import { execSync } from 'child_process'
 import { settings } from '@settings'
 import { Claim, PagedClaimResult } from '../entities/Claim'
 
-export const queryBalance = (address: string) => {
+export const queryBalance = (address: string, height?: number) => {
   try {
-    const result = execSync(`pocket query balance ${address}`).toString()
+    const result = height 
+      ? execSync(`pocket query balance ${address} ${height}`).toString()
+      : execSync(`pocket query balance ${address}`).toString()
     const json = JSON.parse(result.split('\n').slice(1).join(' '))
     return json.balance
   } catch (err) {

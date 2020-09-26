@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { NodeStat } from './../entities/NodeStats';
 import { Repository } from 'typeorm';
 
@@ -13,19 +14,27 @@ export class NodestatQueries {
   ): Promise<NodeStat[] | undefined> {
     return repo.createQueryBuilder('nodestat')
       .where('nodestat.address = :address', { address })
+      .andWhere('nodestat.measuredAt >= :since', { since: moment().add(-7, 'days').format('yy-MM-DD') })
       .getMany();
   }
 
   static async getLatestSince(repo: Repository<NodeStat>, groupBy?: DateGroupType): Promise<NodeStat[]> {
+    const oneWeekAgo = moment().add(-7, 'days').format('yy-MM-DD')
+    console.log(oneWeekAgo)
+
     if (!groupBy) {
       return await repo.manager.query(`
-        SELECT name as Name, balance as Balance, "claimCount" as "claimCount", "measuredAt" as measuredAt FROM "NodeStat"
-        Order by "measuredAt"
+        SELECT name as Name, balance as Balance, "claimCount" as "claimCount", "measuredAt" as measuredAt 
+        FROM "NodeStat"
+        WHERE "measuredAt" >= '${oneWeekAgo}'
+        ORDER BY "measuredAt"
       `)
     }
 
     return await repo.manager.query(`
-      SELECT name as Name, max(balance) as Balance, max("claimCount") as "claimCount", max("measuredAt") as measuredAt FROM "NodeStat"
+      SELECT name as Name, max(balance) as Balance, max("claimCount") as "claimCount", max("measuredAt") as measuredAt 
+      FROM "NodeStat"
+      WHERE "measuredAt" >= '${oneWeekAgo}'
       GROUP BY name, date_trunc('${groupBy}', "measuredAt")
       Order by max("measuredAt")
     `)
